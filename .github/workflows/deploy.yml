@@ -1,0 +1,34 @@
+name: test
+
+
+on:
+  push:
+    branches: [ "main" ]
+
+
+jobs:
+  build-deploy:
+    run-on: ubuntu-latest
+
+
+    steps:
+      - name: download source code
+        uses: actions/checkout@v4
+
+      - name: setup node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.20.8'
+
+
+      - name: install dependencies
+        uses: npm ci
+
+      - name: run the app
+        run: |
+          node app2.js &
+          sleep 5
+          curl http://localhost:3000
+
+      
+
